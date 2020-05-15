@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block body %}
+    <br/>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-5">
+                <div class="card">
+                    <header class="card-header">
+                        <h4 class="card-title mt-2 text-center">Se connecter</h4>
+                    </header>
+                    <article class="card-body">
+                        <form method="post" action="/PPE_Projet/scripts/traitement_connexion.php"
+                              class="needs-validation" novalidate>
+                            <div class="form-group">
+                                <label for="verifcourriel">Courriel</label>
+                                <input type="email" class="form-control" id="verifcourriel" placeholder="Courriel"
+                                       name="courriel" required>
+                                <div class="invalid-feedback">
+                                    Courriel non saisi
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="verifmdp">Saisir votre mot de passe</label>
+                                <input type="password" class="form-control champ" id="verifmdp" placeholder="********"
+                                       name="mdp" required>
+                                <div class="invalid-feedback">
+                                    Mot de passe non saisi
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="checkbox">
+                                    <label><input type="checkbox"> Se souvenir de moi</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <center>
+                                    <div class="col-lg-6">
+                                        <button type="submit" class="btn btn-primary btn-block">Se connecter</button>
+                                    </div>
+                                </center>
+{#                                <h6 class="card-title mt-2 text-center"><a class="text-black text-link" href="reset_motdepasse.php">Mot de passe oubliÃ© ?</a></h6>#}
+                            </div>
+                        </form>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

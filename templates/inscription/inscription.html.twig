@@ -1,0 +1,153 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription{% endblock %}
+
+{% block body %}
+    <br/>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <header class="card-header">
+                        <h4 class="card-title mt-2 text-center">Inscription</h4>
+                    </header>
+                    <article class="card-body">
+                        <form method="post" action="/PPE_Projet/scripts/traitement_inscription.php"
+                              class="needs-validation" novalidate>
+                            <div class="form-row">
+                                <div class="col form-group">
+                                    <label for="verifnom">Nom</label>
+                                    <input type="text" class="form-control" id="verifnom" placeholder="Nom" name="nom"
+                                           required>
+                                    <div class="invalid-feedback">
+                                        Nom non saisi
+                                    </div>
+                                </div>
+                                <div class="col form-group">
+                                    <label for="verifprenom">Prénom</label>
+                                    <input type="text" class="form-control" id="verifprenom" placeholder="Prénom"
+                                           name="prenom" required>
+                                    <div class="invalid-feedback">
+                                        Prénom non saisi
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col form-group" id="divparent">
+                                    <label for="verifcourriel">Courriel</label>
+                                    <input type="email" class="input-courriel form-control" id="verifcourriel"
+                                           placeholder="Courriel" name="courriel" required>
+                                    <div class="invalid-feedback" id="erreurcoourriel">
+                                        Courriel non saisie
+                                    </div>
+                                    <small class="form-text text-muted"><span id="etat"></span>Nous ne partagerons
+                                        jamais votre courriel.</small>
+                                </div>
+                                <div class="col form-group">
+                                    <label for="veriftel">Téléphone</label>
+                                    <input type="text" class="form-control" id="veriftel" placeholder="06.xx.xx.xx.xx"
+                                           name="numero_telephone" minlength="10" maxlength="10" required>
+                                    <div class="invalid-feedback">
+                                        Numéro de téléphone non saisi
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col form-group">
+                                    <label for="verifdate">Date de naissance</label>
+                                    <input type="date" class="form-control" id="verifnom" placeholder=""
+                                           name="date_naissance" required>
+                                    <div class="invalid-feedback">
+                                        Date de naissance non saisie
+                                    </div>
+                                </div>
+                            </div>
+                            {#                            <div class="form-row">#}
+                            {#                                <div class="col form-group">#}
+                            {#                                    <label for="verifnumero_rue">Numéro de rue</label>#}
+                            {#                                    <input type="text" class="form-control" id="verifnumero_rue" placeholder="Numéro de rue" name="numero_rue" required>#}
+                            {#                                    <div class="invalid-feedback">#}
+                            {#                                        Numéro de rue non saisi#}
+                            {#                                    </div>#}
+                            {#                                </div>#}
+                            {#                            </div>#}
+                            {#                                <div class="col form-group">#}
+                            {#                                    <label for="verifrue">Rue</label>#}
+                            {#                                    <input type="text" class="form-control" id="verifrue" placeholder="Rue" name="rue" required>#}
+                            {#                                    <div class="invalid-feedback">#}
+                            {#                                        Rue non saisie#}
+                            {#                                    </div>#}
+                            {#                                </div>#}
+                            {#                            </div>#}
+                            {#                            <div class="form-row">#}
+                            {#                                <div class="col form-group">#}
+                            {#                                    <label for="verifcode_postal">Code postal</label>#}
+                            {#                                    <input type="text" class="form-control" id="verifcode_postal" placeholder="Code postal" name="code_postal" minlength="5" maxlength="5" required>#}
+                            {#                                    <div class="invalid-feedback">#}
+                            {#                                        Code postal non saisi#}
+                            {#                                    </div>#}
+                            {#                                </div>#}
+                            {#                                <div class="col form-group">#}
+                            {#                                    <label for="verifville">Ville</label>#}
+                            {#                                    <input type="text" class="form-control" id="verifville" placeholder="Ville" name="ville" required>#}
+                            {#                                    <div class="invalid-feedback">#}
+                            {#                                        Ville non saisie#}
+                            {#                                    </div>#}
+                            {#                                </div>#}
+                            {#                            </div>#}
+                            <div class="form-row">
+                                <div class="col form-group">
+                                    <label for="verifmdp">Saisir votre mot de passe</label>
+                                    <input type="password" class="form-control" id="verifmdp" placeholder="********"
+                                           name="mdp" onkeyup="taillemdp()" minlength="6" required>
+                                    <div class="invalid-feedback" id="longueurmdp">
+                                        Mot de passe non saisi
+                                    </div>
+                                </div>
+                                <div class="col form-group">
+                                    <label for="verifmdpconf">Confirmer du mot de passe</label>
+                                    <input type="password" class="form-control" id="verifmdpconf" placeholder="********"
+                                           name="confmdp" minlength="6" required>
+                                    <div class="invalid-feedback" id="correspondancemdp">
+                                        Mot de passe de confirmation non saisi
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="customCheck" required>
+                                    <label class="custom-control-label" for="customCheck">
+                                        <small>En créant un compte, vous acceptez les <a
+                                                    class="text-black text-link font-weight-bold" href="">Conditions
+                                                générales de vente</a> de Game Market.
+                                            Veuillez consulter notre <a class="text-black text-link font-weight-bold"
+                                                                        href="">Notice Protection de vos Informations
+                                                Personnelles</a>,
+                                            notre <a class="text-black text-link font-weight-bold" href="">Notice
+                                                Cookies</a> et notre <a class="text-black text-link font-weight-bold"
+                                                                        href="">Notice Annonces publicitaires basées sur
+                                                vos centres d'intérêt</a>.
+                                        </small>
+                                    </label>
+                                    <div class="invalid-feedback">
+                                        Vous devez accepter avant de soumettre.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <center>
+                                    <div class="col-lg-3">
+                                        <button type="submit" id="btn-submit" class="btn btn-primary btn-block"
+                                                onclick="return(correspondancemdp());">S'inscrire
+                                        </button>
+                                    </div>
+                                </center>
+                            </div>
+                        </form>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

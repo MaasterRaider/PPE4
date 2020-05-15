@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    {% block stylesheets %}
+    {% endblock %}
+    <script src="{{ asset ('js/jquery-3.3.1.min.js') }}" crossorigin="anonymous"></script>
+    <script src="{{ asset ('js/popper.min.js') }}" crossorigin="anonymous"></script>
+    <script src="{{ asset ('js/bootstrap.min.js') }}" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{ asset ('css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset ('css/style.css') }}">
+    <script src="https://kit.fontawesome.com/21b79ae29b.js" crossorigin="anonymous"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark navbar-fixed-top">
+    <a class="navbar-brand" href="{{ path('home') }}">Games Market</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+            aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item dropdown">
+                <div class="nav2">
+                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbardrop" data-toggle="dropdown">
+                        PS4
+                    </a>
+                    <div class="dropdown-menu text-center">
+                        <a class="dropdown-item" href="/PPE_Projet/produits.php?plateforme=ps4&categorie=jeux">Jeux</a>
+                        <a class="dropdown-item" href="/PPE_Projet/produits.php?plateforme=ps4&categorie=consoles">Consoles</a>
+                        <a class="dropdown-item" href="/PPE_Projet/produits.php?plateforme=ps4&categorie=accessoires">Accessoires</a>
+                        <a class="dropdown-item" href="/PPE_Projet/produits.php?plateforme=ps4&categorie=digital">Cartes
+                            PSN & DLC</a>
+                    </div>
+                </div>
+            <li class="nav-item dropdown">
+                <div class="nav2">
+                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbardrop" data-toggle="dropdown">
+                        XBOX
+                    </a>
+                    <div class="dropdown-menu text-center">
+                        <a class="dropdown-item" href="/PPE_Projet/produits.php?plateforme=xbox&categorie=jeux">Jeux</a>
+                        <a class="dropdown-item" href="/PPE_Projet/produits.php?plateforme=xbox&categorie=consoles">Consoles</a>
+                        <a class="dropdown-item" href="/PPE_Projet/produits.php?plateforme=xbox&categorie=accessoires">Accessoires</a>
+                        <a class="dropdown-item" href="/PPE_Projet/produits.php?plateforme=xbox&categorie=digital">Cartes
+                            XBOX LIVE & DLC</a>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <div class="nav2">
+                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbardrop" data-toggle="dropdown">
+                        SWITCH
+                    </a>
+                    <div class="dropdown-menu text-center">
+                        <a class="dropdown-item"
+                           href="/PPE_Projet/produits.php?plateforme=switch&categorie=jeux">Jeux</a>
+                        <a class="dropdown-item" href="/PPE_Projet/produits.php?plateforme=switch&categorie=consoles">Consoles</a>
+                        <a class="dropdown-item"
+                           href="/PPE_Projet/produits.php?plateforme=switch&categorie=accessoires">Accessoires</a>
+                        <a class="dropdown-item" href="/PPE_Projet/produits.php?plateforme=switch&categorie=digital">Contenu
+                            digital</a>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <div class="nav2">
+                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbardrop" data-toggle="dropdown">
+                        PC
+                    </a>
+                    <div class="dropdown-menu text-center">
+                        <a class="dropdown-item" href="/PPE_Projet/produits.php?plateforme=pc&categorie=jeux">Jeux</a>
+                        <a class="dropdown-item" href="/PPE_Projet/produits.php?plateforme=pc&categorie=accessoires">Accessoires</a>
+                        <a class="dropdown-item" href="/PPE_Projet/produits.php?plateforme=pc&categorie=digital">Contenu
+                            digital</a>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <ul class="navbar-nav">
+            <li class="nav-item dropdown dropleft">
+                <a class="nav-link text-white" href="#" id="navbardrop" data-toggle="dropdown">
+                    <i class="fas fa-user"></i>
+                </a>
+                <div class="dropdown-menu text-center">
+                    {% if not is_granted('ROLE_USER') %}
+                        <a class="dropdown-item" href="{{ path('app_register') }}">Inscription</a>
+                        <a class="dropdown-item" href="{{ path('app_login') }}">Connexion</a>
+                    {% else %}
+                        {# profil #}
+                        <a class="dropdown-item" href="#"><b>{{ app.user.nom ~ ' ' ~ app.user.prenom }}</b></a>
+                        <hr>
+                        <a class="dropdown-item" href="#">Mes commandes</a>
+                        <hr>
+                        <a class="dropdown-item" data-toggle="modal" data-target="#logoutModal" href="#">Déconnexion</a>
+                    {% endif %}
+                </div>
+            </li>
+            <span style="padding-left:10px"></span>
+            <li class="nav-item dropdown dropleft">
+                <a class="nav-link text-white" href="#" id="navbardrop" data-toggle="dropdown">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="badge badge-danger">0</span>
+                </a>
+                <ul class="dropdown-menu dropdown-cart" role="menu">
+                    <li>
+                                    <span class="item">
+                                        <span class="item-left padding_recap">
+                                            <img class="resize_navbar"
+                                                 src="{{ asset ('images/facebook.png') }}" alt="" style="padding-top: 10%"/>
+                                            <span class="item-info">
+                                                <span class="uppercase" style="max-width: 143px">Ta mère en string de guerre</span>
+                                                <span style="max-width: 143px">299.99 &euro; / unité </span>
+                                            </span>
+                                        </span>
+                                        <span class="item-right" style="padding-top: 7%">
+                                            <a href="/PPE_Projet/scripts/traitement_supprimer_produit?identifiant_produit=1"
+                                               class="btn btn-xs btn-danger pull-right"><i class="fas fa-times-circle"></i></a>
+                                        </span>
+                                    </span>
+                    </li>
+                    <br/>
+                    <center><a class="btn btn-primary" href="/PPE_Projet/compte/panier.php">Afficher le panier</a></li>
+                    </center>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Vous nous quittez ?</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">Sélectionnez "Se déconnecter" si vous êtes prêt à mettre fin à votre session en
+                cours.
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
+                <a class="btn btn-primary" href="{{ path('app_logout') }}">Se déconnecter</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% block body %}
+{% endblock %}
+<br/>
+<footer id="footer-size" class="bg-dark">
+    <div class="container text-center text-md-left">
+        <div class="row">
+            <div class="col-md-4 mx-auto">
+                <h6 class="text-white text-uppercase mt-3 mb-4">Games Market</h6>
+                <p class="text-white">Créée en 2018, cette jeune entreprise vend du matériel multimédia ainsi que
+                    des
+                    jeux-vidéos à des prix défiants toute concurrence !</p>
+            </div>
+            <hr class="clearfix w-100 d-md-none">
+            <div class="col-md-2 mx-auto">
+                <h6 class="text-white text-uppercase mt-3 mb-4">Navigation</h6>
+                <ul class="list-unstyled text-white">
+                    <li>
+                        <a class="text-white" href="/PPE_Projet/produits_all.php?plateforme=ps4">PS4</a>
+                    </li>
+                    <li>
+                        <a class="text-white" href="/PPE_Projet/produits_all.php?plateforme=xbox">XBOX ONE</a>
+                    </li>
+                    <li>
+                        <a class="text-white" href="/PPE_Projet/produits_all.php?plateforme=switch">SWITCH</a>
+                    </li>
+                    <li>
+                        <a class="text-white" href="/PPE_Projet/produits_all.php?plateforme=pc">PC</a>
+                    </li>
+                </ul>
+            </div>
+            <hr class="clearfix w-100 d-md-none">
+            <div class="col-md-2 mx-auto">
+                <h6 class="text-white text-uppercase mt-3 mb-4">A propos de nous</h6>
+                <ul class="list-unstyled text-white">
+                    <li>
+                        <a class="text-white" href="/PPE_Projet/a-propos.php">A propos de nous</a>
+                    </li>
+                    <li>
+                        <a class="text-white" href="/PPE_Projet/contact.php">Nous contacter</a>
+                    </li>
+                    <li>
+                        <a class="text-white" href="/PPE_Projet/mentions-legales.php">Mentions légales</a>
+                    </li>
+                    <li>
+                        <a class="text-white" href="/PPE_Projet/cookies.php">Cookies</a>
+                    </li>
+                </ul>
+            </div>
+            <hr class="clearfix w-100 d-md-none">
+            <div class="col-md-2 mx-auto">
+                <h6 class="text-white text-uppercase mt-3 mb-4">Les applications</h6>
+                <a href="https://play.google.com/store?hl=fr"><img
+                            src="https://www.sio-lurcat.fr/PPE_Projet/images/os/google-play.png"
+                            class="img-fluid" width="207px"
+                            height="67px"/></a><br><br>
+                <a href="https://www.apple.com/fr/itunes/"><img
+                            src="https://www.sio-lurcat.fr/PPE_Projet/images/os/app-store.png"
+                            class="img-fluid" width="207px" height="67px"/></a>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <ul class="list-unstyled list-inline text-center">
+        <li class="list-inline-item">
+            <img src="{{ asset ('images/paypal.png') }}"/>
+        </li>
+        <li class="list-inline-item">
+            <img src="{{ asset ('images/visa.png') }}"/>
+        </li>
+        <li class="list-inline-item">
+            <img src="{{ asset ('images/mastercard.png') }}"/>
+        </li>
+    </ul>
+    <hr>
+    <ul class="list-unstyled list-inline text-center">
+        <li class="list-inline-item">
+            <a class="btn-floating btn-fb mx-1">
+                <a href="https://www.facebook.com"><img
+                            src="{{ asset ('images/facebook.png') }}"/></a>
+            </a>
+        </li>
+        <li class="list-inline-item">
+            <a class="btn-floating btn-tw mx-1">
+                <a href="https://www.twitter.com"><img
+                            src="{{ asset ('images/twitter.png') }}"/></a>
+            </a>
+        </li>
+        <li class="list-inline-item">
+            <a class="btn-floating btn-gplus mx-1">
+                <a href="" onclick="alert('Cherchez Games.Market sur Snapchat :)');"><img
+                            src="{{ asset ('images/snapchat.png') }}"/></a>
+            </a>
+        </li>
+        <li class="list-inline-item">
+            <a class="btn-floating btn-li mx-1">
+                <a href="https://www.youtube.com"><img
+                            src="{{ asset ('images/youtube.png') }}"/></a>
+            </a>
+        </li>
+        <li class="list-inline-item">
+            <a class="btn-floating btn-dribbble mx-1">
+                <a href="" onclick="alert('Cherchez Games.Market sur Instagram :)');"><img
+                            src="{{ asset ('images/instagram.png') }}"/></a>
+            </a>
+        </li>
+    </ul>
+    <div class="footer-copyright text-center py-3 text-white">&copy; 2020 Copyright &nbsp;
+        <a class="text-white" href="/PPE_Projet/equipe.php">Designed Theo Normand </a>
+    </div>
+    {#    <?php#}
+    {#    if (isset($_SESSION['identifiant'])) {#}
+    {#        $identifiant = $_SESSION['identifiant'];#}
+    {#        $req = $pdo->query("SELECT id_statut FROM utilisateurs WHERE identifiant='$identifiant'");#}
+    {#    $row = $req->fetch();#}
+    {#    if ($row['id_statut'] != 1) {#}
+    {#    ?>#}
+    <div class="text-center text-white"><a class="text-white"
+                                           href="/PPE_Projet/administration/index.php">Administration</a></div>
+    <br>
+    {#    <?php#}
+    {#        }#}
+    {#    }#}
+    {#    ?>#}
+</footer>
+</body>
+{% block javascripts %}{% endblock %}
+</html>
