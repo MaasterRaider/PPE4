@@ -30,6 +30,8 @@ class ProduitController extends AbstractController
 
     /**
      * @Route("/new", name="produit_new", methods={"GET","POST"})
+     * @param Request $request
+     * @return Response
      */
     public function new(Request $request): Response
     {
@@ -53,6 +55,8 @@ class ProduitController extends AbstractController
 
     /**
      * @Route("/{id}", name="produit_show", methods={"GET"})
+     * @param Produit $produit
+     * @return Response
      */
     public function show(Produit $produit): Response
     {
@@ -63,6 +67,9 @@ class ProduitController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="produit_edit", methods={"GET","POST"})
+     * @param Request $request
+     * @param Produit $produit
+     * @return Response
      */
     public function edit(Request $request, Produit $produit): Response
     {
@@ -83,10 +90,13 @@ class ProduitController extends AbstractController
 
     /**
      * @Route("/{id}", name="produit_delete", methods={"DELETE"})
+     * @param Request $request
+     * @param Produit $produit
+     * @return Response
      */
     public function delete(Request $request, Produit $produit): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$produit->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $produit->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($produit);
             $entityManager->flush();

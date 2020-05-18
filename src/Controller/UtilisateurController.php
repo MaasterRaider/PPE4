@@ -8,6 +8,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Encoder\XmlEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
 
 /**
  * @Route("/utilisateur")
@@ -93,5 +97,22 @@ class UtilisateurController extends AbstractController
         }
 
         return $this->redirectToRoute('utilisateur_index');
+    }
+
+    /**
+     * @Route("/apiall", name="apiall_utilisateur_show")
+     */
+    public function webserviceAll(): Response
+    {
+        $lesUtilisateurs=$this->getDoctrine()->getRepository(Utilisateur::class)->findAll();
+
+        $encoders = [new XmlEncoder(), new JsonEncoder()];
+        $normalizers = [new ObjectNormalizer()];
+        $serializer = new Serializer($normalizers, $encoders);
+
+        $reponse=new Response();
+        $reponse->setContent($serializer->serialize($lesUtilisateurs, 'json'));
+        $reponse->headers->set('Content-Type', 'application/json');
+        return $reponse;
     }
 }
